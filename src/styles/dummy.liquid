@@ -1,0 +1,772 @@
+<div style="width:100%; height:100%;margin-top:40px">
+  <style>
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .product-card {
+      width: calc(33.33% - 20px);
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 13px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      .product-card {
+        width: calc(50% - 20px);
+      }
+
+      .product-list.few-products .product-card {
+        width: calc(100% - 20px);
+      }
+
+      #category-list2 {
+        display: none important;
+      }
+
+      #category-list {
+        display: block;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .product-card {
+        width: calc(100% - 20px);
+      }
+
+      #category-list {
+        display: none;
+      }
+
+      #category-list2 {
+        display: block !important;
+      }
+    }
+
+    /* Add new styles for the second collection section */
+    #second-collection-products {
+      display: none;
+      flex-direction: row;
+    }
+
+    #second-collection-products .product-card {
+      width: calc(20% - 20px);
+    }
+  </style>
+
+  <div id="category-list2" style="text-align:left; background-color:black; display:none; 
+color:white; margin-bottom:20px; border-radius:10px; padding-top:10px; 
+  @media (max-width: 1024px) {
+      display: none;
+  }
+
+  @media (max-width: 767px) {
+      display: block;
+  }
+">
+ <h4 class="category-heading2" style="text-align:center;">Categories 22</h4>
+    <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center;">
+      {% for collection in collections %}
+        <li class="category-filter" style="cursor: pointer; list-style: none; width: calc(33.33% - 10px); margin: 5px; box-sizing: border-box;" data-collection-handle="{{ collection.handle }}">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div id="category-list">
+    <h4 class="category-heading" style="text-align: center;">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" style="cursor: pointer;" data-collection-handle="{{ collection.handle }}">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% for collection in collections %}
+    <div id="{{ collection.handle }}-products" class="product-list{% if forloop.first %} few-products{% endif %}" style="{% if forloop.first %}display: flex; flex-direction: column;{% else %}display: none; flex-direction: column;{% endif %}">
+      <h4 style="text-align: center; color:black;">{{ collection.title }}</h4>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for product in collection.products %}
+          <div class="product-card">
+            <h5>{{ product.title }}</h5>
+            <img src="{{ product.images[0] | img_url: '600x600' }}" alt="{{ product.images[0].alt }}" style="width: 100%; height: 150px; object-fit: cover;">
+            <p style="text-align: center; margin-top: 20px;font-size:16px;">Price: {{ product.price | money }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        var collectionHandle = filter.getAttribute('data-collection-handle');
+        var productList = document.getElementById(collectionHandle + '-products');
+
+        document.querySelectorAll('.product-list').forEach(function (list) {
+          list.style.display = 'none';
+          list.classList.remove('few-products');
+        });
+
+        if (productList) {
+          productList.style.display = 'flex';
+          // Add the 'few-products' class if there are fewer than 3 products
+          if (productList.querySelectorAll('.product-card').length < 3) {
+            productList.classList.add('few-products');
+          }
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="width:100%; height:100%;margin-top:40px">
+  <style>
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .product-card {
+      width: calc(33.33% - 20px);
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 13px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      .product-card {
+        width: calc(50% - 20px);
+      }
+
+      .product-list.few-products .product-card {
+        width: calc(100% - 20px);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .product-card {
+        width: calc(100% - 20px);
+      }
+
+      #category-list {
+        display: none;
+      }
+    }
+
+    /* Add new styles for the second collection section */
+    #second-collection-products {
+      display: none;
+      flex-direction: row;
+    }
+
+    #second-collection-products .product-card {
+      width: calc(20% - 20px);
+    }
+  </style>
+
+  <div id="category-list2" style="text-align:left; background-color:black; color:white; margin-bottom:20px; border-radius:10px; padding-top:10px;">
+  <h4 class="category-heading2" style="text-align:center;" >Categories 22</h4>
+  <ul style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center;">
+    {% for collection in collections %}
+      <li class="category-filter" style="cursor: pointer; list-style: none; width: calc(33.33% - 10px); margin: 5px; box-sizing: border-box;" data-collection-handle="{{ collection.handle }}">
+        {{ collection.title }}
+        {% if collection.image %}
+          <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+  <div id="category-list">
+    <h4 class="category-heading" style="text-align: center;">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" style="cursor: pointer;" data-collection-handle="{{ collection.handle }}">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+
+
+
+  {% for collection in collections %}
+    <div id="{{ collection.handle }}-products" class="product-list{% if forloop.first %} few-products{% endif %}" style="{% if forloop.first %}display: flex; flex-direction: column;{% else %}display: none; flex-direction: column;{% endif %}">
+      <h4 style="text-align: center; color:black;">{{ collection.title }}</h4>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for product in collection.products %}
+          <div class="product-card">
+            <h5>{{ product.title }}</h5>
+            <img src="{{ product.images[0] | img_url: '600x600' }}" alt="{{ product.images[0].alt }}" style="width: 100%; height: 150px; object-fit: cover;">
+            <p style="text-align: center; margin-top: 20px;font-size:16px;">Price: {{ product.price | money }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+ 
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        var collectionHandle = filter.getAttribute('data-collection-handle');
+        var productList = document.getElementById(collectionHandle + '-products');
+
+        document.querySelectorAll('.product-list').forEach(function (list) {
+          list.style.display = 'none';
+          list.classList.remove('few-products');
+        });
+
+        if (productList) {
+          productList.style.display = 'flex';
+          // Add the 'few-products' class if there are fewer than 3 products
+          if (productList.querySelectorAll('.product-card').length < 3) {
+            productList.classList.add('few-products');
+          }
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="width:100%; height:100%;margin-top:40px">
+  <style>
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .product-card {
+      width: calc(33.33% - 20px);
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 13px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      .product-card {
+        width: calc(50% - 20px);
+      }
+
+      .product-list.few-products .product-card {
+        width: calc(100% - 20px);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .product-card {
+        width: calc(100% - 20px);
+      }
+
+      #category-list {
+        display: none;
+      }
+    }
+  </style>
+
+  <div id="category-list">
+    <h4 class="category-heading" style="text-align: center;">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" style="cursor: pointer;" data-collection-handle="{{ collection.handle }}">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% for collection in collections %}
+    <div id="{{ collection.handle }}-products" class="product-list{% if forloop.first %} few-products{% endif %}" style="{% if forloop.first %}display: flex; flex-direction: column;{% else %}display: none; flex-direction: column;{% endif %}">
+      <h4 style="text-align: center; color:black;">{{ collection.title }}</h4>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for product in collection.products %}
+          <div class="product-card">
+            <h5>{{ product.title }}</h5>
+            <img src="{{ product.images[0] | img_url: '600x600' }}" alt="{{ product.images[0].alt }}" style="width: 100%; height: 150px; object-fit: cover;">
+            <p style="text-align: center; margin-top: 20px;font-size:16px;">Price: {{ product.price | money }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        var collectionHandle = filter.getAttribute('data-collection-handle');
+        var productList = document.getElementById(collectionHandle + '-products');
+
+        document.querySelectorAll('.product-list').forEach(function (list) {
+          list.style.display = 'none';
+          list.classList.remove('few-products');
+        });
+
+        if (productList) {
+          productList.style.display = 'flex';
+          // Add the 'few-products' class if there are fewer than 3 products
+          if (productList.querySelectorAll('.product-card').length < 3) {
+            productList.classList.add('few-products');
+          }
+        }
+      });
+    });
+  });
+</script>
+.category-heading {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  background-color: red;
+  padding: 10px;
+  border-radius: 10px;
+}
+#category-list {
+  float: left;
+  width: 15%;
+  padding: 10px;
+  background-color: black;
+  border-radius: 10px;
+}
+#category-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#category-list li {
+  cursor: pointer;
+  padding: 8px;
+  margin-bottom: 5px;
+  color: white;
+  border-radius: 5px;
+}
+#category-list li:hover,
+#category-list li.active {
+  background-color: #ddd;
+  color: black;
+}
+#product-grid {
+  float: left;
+  width: 80%;
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="width:100%; height:100%;margin-top:40px">
+  <div id="category-list">
+    <h4 class="category-heading" style="text-align: center;">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" style="cursor: pointer;" data-collection-handle="{{ collection.handle }}">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% for collection in collections %}
+    <div id="{{ collection.handle }}-products" class="product-list" style="{% if forloop.first %}display: block;{% else %}display: none;{% endif %}">
+      <h4 style="text-align: center; color:black;">{{ collection.title }}</h4>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for product in collection.products %}
+          <div class="product-card" style="width: calc(33.33% - 20px); margin: 10px; padding: 10px; box-sizing: border-box; border: none; border-radius:13px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <h5>{{ product.title }}</h5>
+            <img src="{{ product.images[0] | img_url: '600x600' }}" alt="{{ product.images[0].alt }}" style="width: 100%; height: 150px; object-fit: cover;">
+            <!-- Set a fixed width and height, adjust as needed -->
+            <p style="text-align: center; margin-top: 20px;font-size:16px;">Price: {{ product.price | money }}</p>
+            <!-- Add more details as needed -->
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        var collectionHandle = filter.getAttribute('data-collection-handle');
+        var productList = document.getElementById(collectionHandle + '-products');
+
+        // Hide all product lists
+        document.querySelectorAll('.product-list').forEach(function (list) {
+          list.style.display = 'none';
+        });
+
+        // Show the selected product list
+        if (productList) {
+          productList.style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div style="width:100%; height:100%;">
+<div id="category-list" >
+  <h4 class="category-heading" style="text-align: center;">Categories</h4>
+  <ul>
+    {% for collection in collections %}
+      <li class="category-filter" style="cursor: pointer;" data-collection-handle="{{ collection.handle }}">
+        {{ collection.title }}
+        {% if collection.image %}
+          <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% for collection in collections %}
+  <div id="{{ collection.handle }}-products" class="product-list" style="display: none;">
+    <h4 style="text-align: center;">{{ collection.title }}</h4>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      {% for product in collection.products %}
+        <div class="product-card" style="width: calc(33.33% - 20px); margin: 10px; padding: 10px; box-sizing: border-box; border: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+          <h5>{{ product.title }}</h5>
+          <img src="{{ product.images[0] | img_url: '600x600' }}" alt="{{ product.images[0].alt }}" style="max-width: 100%; height: auto;">
+          <p style="text-align: center;">Price: {{ product.price | money }}</p>
+          <!-- Add more details as needed -->
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}
+
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var categoryFilters = document.querySelectorAll('.category-filter');
+
+    categoryFilters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        var collectionHandle = filter.getAttribute('data-collection-handle');
+        var productList = document.getElementById(collectionHandle + '-products');
+
+        // Hide all product lists
+        document.querySelectorAll('.product-list').forEach(function (list) {
+          list.style.display = 'none';
+        });
+
+        // Show the selected product list
+        if (productList) {
+          productList.style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Add this code to display the category list and product grid -->
+<div id="category-products-container">
+  <div id="category-list">
+    <h4 class="category-heading">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" data-category="{{ collection.title }} data-product="collection.products" " style="cursor: pointer;" onclick="filterCategory(this)">
+          {{ collection.title }}
+
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div id="product-grid">
+    <h4 id="category-title">Products</h4>
+    <div id="category-content">
+      {% for collection in collections %}
+      {% for product in collection.products %}
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price | money }}</p>
+        <!-- Add more product details as needed -->
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  var myCollection = ''; // Initialize myCollection variable outside the function
+
+  function filterCategory(categoryElement) {
+    var selectedCategory = categoryElement.getAttribute('data-category');
+    var productGrid = document.getElementById('product-grid');
+    var categoryTitle = document.getElementById('category-title');
+    var categoryContent = document.getElementById('category-content');
+
+    // Deactivate all categories
+    var allCategoryElements = document.querySelectorAll('.category-filter');
+    allCategoryElements.forEach(function (element) {
+      element.classList.remove('active');
+    });
+
+    // Activate the selected category
+    categoryElement.classList.add('active');
+
+    // Set myCollection to the selected category
+    myCollection = selectedCategory;
+
+    // Display the selected category in the product grid
+    categoryTitle.textContent = 'Category: ' + (myCollection === 'all' ? 'All Products' : myCollection);
+
+    // Clear existing content in the product grid
+    productGrid.innerHTML = '';
+
+    // Clear previous category content
+    categoryContent.innerHTML = '';
+  console.log('Selected Category:', selectedCategory);
+  console.log('myCollection:', myCollection);
+
+    // Add product details to the container
+    {% for collection in collections %}
+
+      {% if collection.title == selectedCategory %}
+        {% for product in collection.products %}
+          var productElement = document.createElement('div');
+          productElement.innerHTML = '<h3>{{ product.title | escape }}</h3><p>{{ product.price | money | escape }}</p>'; 
+          categoryContent.appendChild(productElement);
+
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+    // Add the category title and content to the product grid
+    productGrid.appendChild(categoryTitle);
+    productGrid.appendChild(categoryContent);
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Add this code to display the category list and product grid -->
+<div id="category-products-container">
+  <div id="category-list">
+    <h4 class="category-heading">Categories</h4>
+    <ul>
+      {% for collection in collections %}
+        <li class="category-filter" data-category="{{ collection.title }}" style="cursor: pointer;" onclick="filterCategory(this)">
+          {{ collection.title }}
+          {% if collection.image %}
+            <img src="{{ collection.image.src }}" alt="{{ collection.title }}" style="max-width: 50px; max-height: 50px;">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div id="product-grid">
+    <!-- Products will be dynamically added here based on user selection -->
+  </div>
+</div>
+
+<script>
+  function filterCategory(categoryElement) {
+    var selectedCategory = categoryElement.getAttribute('data-category');
+    var productGrid = document.getElementById('product-grid');
+
+    // Deactivate all categories
+    var allCategoryElements = document.querySelectorAll('.category-filter');
+    allCategoryElements.forEach(function (element) {
+      element.classList.remove('active');
+    });
+
+    // Activate the selected category
+    categoryElement.classList.add('active');
+
+    // Display the selected category in the product grid
+    var categoryTitle = document.createElement('h2');
+    categoryTitle.textContent = 'Category: ' + (selectedCategory === 'all' ? 'All Products' : selectedCategory);
+
+    // Add the category title to the product grid
+    productGrid.innerHTML = ''; // Clear existing content
+    productGrid.appendChild(categoryTitle);
+
+    // Fetch and display products based on the selected category
+    if (selectedCategory === 'all') {
+      // Display all products
+      // You should have a way to fetch all products, for example, an array called 'products'
+      // Replace 'products' with the actual array of products
+      displayProducts(productGrid, products);
+    } else {
+      // Display products for the selected category
+      // You should have a way to fetch products for a specific category, for example, an array called 'categoryProducts'
+      // Replace 'categoryProducts' with the actual array of products for the selected category
+      displayProducts(productGrid, categoryProducts[selectedCategory]);
+    }
+      displayProducts(productGrid, categoryProducts[selectedCategory]);
+  }
+
+  function displayProducts(productGrid, products) {
+    products.forEach(function (product) {
+      var productElement = document.createElement('div');
+      productElement.classList.add('product-item');
+      productElement.innerHTML = '<h3>' + product.title + '</h3><p>' + product.description + '</p>';
+      // Add more product details as needed
+
+      productGrid.appendChild(productElement);
+    });
+  }
+</script>
